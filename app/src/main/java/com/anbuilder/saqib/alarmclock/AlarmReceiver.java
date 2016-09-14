@@ -40,7 +40,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 
         //this will update the UI with message
         MainActivity inst = MainActivity.instance();
-        inst.setAlarmText("Alarm! Wake up! Wake up!");
+        inst.setAlarmText("");
 
         //this will sound the alarm tone
         //this will sound the alarm once, if you wish to

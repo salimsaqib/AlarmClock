@@ -38,13 +38,13 @@ public class Snooze extends AppCompatActivity {
     }
     public void snooze()
     {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
-        calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
+
+        long currentTimeMillis = System.currentTimeMillis();
+        long nextUpdateTimeMillis = currentTimeMillis+10000;
         Intent i = new Intent(Snooze.this, AlarmReceiver.class);
         //startActivity(i);
         pendingIntent = PendingIntent.getBroadcast(Snooze.this, 0, i, 0);
-        alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis() + 5000, pendingIntent);
+        alarmManager.set(AlarmManager.RTC, nextUpdateTimeMillis, pendingIntent);
     }
 
 

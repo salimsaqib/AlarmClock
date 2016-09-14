@@ -5,6 +5,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -70,10 +71,18 @@ public class MainActivity extends AppCompatActivity {
         if (((ToggleButton) view).isChecked()) {
             Log.d("MainActivity", "Alarm On");
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
-            calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
+            if (Build.VERSION.SDK_INT >= 23 )
+            {
+                calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getHour());
+                calendar.set(Calendar.MINUTE, alarmTimePicker.getMinute());
+            }
+            else
+            {
+                calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
+                calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
+            }
+
             Intent i = new Intent(MainActivity.this, AlarmReceiver.class);
-            //startActivity(i);
             pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, i, 0);
             alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
         } else {
