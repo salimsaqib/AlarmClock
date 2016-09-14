@@ -13,17 +13,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/alarmTimePicker"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-
-    <ToggleButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Alarm On/Off"
-        android:id="@+id/alarmToggle"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/alarmTimePicker"
-        android:onClick="onToggleClicked" />
+        android:timePickerMode="spinner"
+        android:layout_marginTop="150dp"/>
+
+
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -37,10 +32,14 @@
         android:layout_below="@+id/alarmToggle" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/snoozebutton"
         android:text="Snooze"
+        android:layout_below="@id/alarmTimePicker"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:onClick="onClickSnooze"
         />
 
 </RelativeLayout>
