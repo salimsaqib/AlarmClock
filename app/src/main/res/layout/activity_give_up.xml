@@ -103,5 +103,15 @@
         android:layout_marginTop="450dp"
         android:onClick="onClickSubmit"
         />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/giveupbutton"
+        android:text="Give Up"
+        android:layout_below="@id/alarmText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="500dp"
+        android:onClick="onClickGiveUp"
+        />
 
 </RelativeLayout>

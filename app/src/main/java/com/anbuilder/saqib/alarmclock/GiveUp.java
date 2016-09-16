@@ -21,7 +21,7 @@ import java.util.Random;
 import java.util.Vector;
 import com.anbuilder.saqib.alarmclock.R;
 
-public class Quiz extends AppCompatActivity {
+public class GiveUp extends AppCompatActivity {
 
     PendingIntent pendingIntent;
     AlarmManager alarmManager;
@@ -32,12 +32,12 @@ public class Quiz extends AppCompatActivity {
     public static Bundle tempBundle;
     public static String[] input = new String[100];
     public static int count=1;
-    QuizHandle instance = new QuizHandle(this);
+    QuizHandle2 instance = new QuizHandle2(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_quiz);
+        setContentView(R.layout.activity_give_up);
         radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
         radioButton1 = (RadioButton) findViewById(R.id.no1);
@@ -67,6 +67,8 @@ public class Quiz extends AppCompatActivity {
                 i++;
 
             }
+            System.out.println("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
+            System.out.println(input[3]);
 
 
 
@@ -74,42 +76,47 @@ public class Quiz extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        QuizHandle a = new QuizHandle(this);
+        QuizHandle2 a = new QuizHandle2(this);
         a.QuizGenerate();
 
 
 
     }
+    public void onClickGiveUp(View view) {
+        AlarmReceiver.terminate();
+        Intent intent = new Intent(GiveUp.this, AlarmReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(GiveUp.this, 0, intent, 0);
+        alarmManager.cancel(pendingIntent);
+
+        Intent intent2 = new Intent(GiveUp.this, MainActivity.class);
+        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent2);
+    }
 
     public void onClickSubmit(View view) {
-        if(Quiz.count==2)
-        {
-            Intent intent3 = new Intent(Quiz.this, GiveUp.class);
-            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent3);
-        }
 
-        QuizHandle a = new QuizHandle(this);
+
+        QuizHandle2 a = new QuizHandle2(this);
         boolean b = a.match();
 
         if(b==true) {
             AlarmReceiver.terminate();
-            Intent intent = new Intent(Quiz.this, AlarmReceiver.class);
-            pendingIntent = PendingIntent.getBroadcast(Quiz.this, 0, intent, 0);
+            Intent intent = new Intent(GiveUp.this, AlarmReceiver.class);
+            pendingIntent = PendingIntent.getBroadcast(GiveUp.this, 0, intent, 0);
             alarmManager.cancel(pendingIntent);
 
-            Intent intent2 = new Intent(Quiz.this, MainActivity.class);
+            Intent intent2 = new Intent(GiveUp.this, MainActivity.class);
             //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent2);
         }
         else
         {
             System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
-            QuizHandle ab = new QuizHandle(this);
+            QuizHandle2 ab = new QuizHandle2(this);
             ab.QuizGenerate();
 
         }
-        Quiz.count++;
+        //Quiz.count++;
 
     }
 
@@ -117,14 +124,14 @@ public class Quiz extends AppCompatActivity {
 
 }
 
-class QuizHandle
+class QuizHandle2
 {
     //Quiz a = new Quiz();
 
     public Activity activity;
 
 
-    public QuizHandle( Activity _activity){
+    public QuizHandle2( Activity _activity){
 
         this.activity = _activity;
 
@@ -144,9 +151,10 @@ class QuizHandle
             if(number % 8 == 0) {
 
 
+
                 for(int i =1 ;i<=7;i++)
                 {
-                    input[i] = Quiz.input[number+i];
+                    input[i] = GiveUp.input[number+i];
                 }
 
 
@@ -155,10 +163,14 @@ class QuizHandle
             else if(number==1) {
 
 
+
                 for(int i =1 ;i<=7;i++)
                 {
-                    input[i] = Quiz.input[number+i-1];
+                    input[i] = GiveUp.input[number+i-1];
                 }
+
+
+
 
                 break;
             }
@@ -172,15 +184,15 @@ class QuizHandle
 
         System.out.println("blaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
 
-        Quiz.tv.setText("Guess the word \n\n" + input[1]);
-        Quiz.radioGroup.check(R.id.no1);
+        GiveUp.tv.setText("Guess the word \n\n" + input[1]);
+        GiveUp.radioGroup.check(R.id.no1);
 
-        Quiz.radioButton1.setText(input[2]);
-        Quiz.radioButton2.setText(input[3]);
-        Quiz.radioButton3.setText(input[4]);
-        Quiz.radioButton4.setText(input[5]);
+        GiveUp.radioButton1.setText(input[2]);
+        GiveUp.radioButton2.setText(input[3]);
+        GiveUp.radioButton3.setText(input[4]);
+        GiveUp.radioButton4.setText(input[5]);
 
-        Quiz.tv2.setText("Hint: " + input[7]);
+        GiveUp.tv2.setText("Hint: "+input[7]);
 
 
 
@@ -190,10 +202,10 @@ class QuizHandle
     public boolean match() {
 
 
-        int selectedButton = Quiz.radioGroup.getCheckedRadioButtonId();
-        Quiz.radioButtonselect = (RadioButton)this.activity.findViewById(selectedButton);
+        int selectedButton = GiveUp.radioGroup.getCheckedRadioButtonId();
+        GiveUp.radioButtonselect = (RadioButton)this.activity.findViewById(selectedButton);
 
-        String method = Quiz.radioButtonselect.getText().toString();
+        String method = GiveUp.radioButtonselect.getText().toString();
 
 
         //System.out.println("quiz outer "+input[3]);

@@ -29,6 +29,8 @@
         </activity>
         <activity android:name="com.anbuilder.saqib.alarmclock.Quiz" >
         </activity>
+        <activity android:name="com.anbuilder.saqib.alarmclock.GiveUp" >
+        </activity>
     </application>
 
 </manifest>
