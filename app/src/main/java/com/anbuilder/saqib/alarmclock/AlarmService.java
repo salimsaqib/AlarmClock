@@ -31,7 +31,7 @@ public class AlarmService extends IntentService {
                 new Intent(this, MainActivity.class), 0);
 
         NotificationCompat.Builder alamNotificationBuilder = new NotificationCompat.Builder(
-                this).setContentTitle("Alarm").setSmallIcon(R.drawable.ic_launche)
+                this).setContentTitle("Alarm").setSmallIcon(R.drawable.alarmicon1)
                 .setStyle(new NotificationCompat.BigTextStyle().bigText(msg))
                 .setContentText(msg);
 

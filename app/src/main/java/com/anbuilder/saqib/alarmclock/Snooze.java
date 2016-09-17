@@ -40,7 +40,7 @@ public class Snooze extends AppCompatActivity {
     {
 
         long currentTimeMillis = System.currentTimeMillis();
-        long nextUpdateTimeMillis = currentTimeMillis+100000;
+        long nextUpdateTimeMillis = currentTimeMillis+1000000;
         Intent i = new Intent(Snooze.this, AlarmReceiver.class);
         //startActivity(i);
         pendingIntent = PendingIntent.getBroadcast(Snooze.this, 0, i, 0);
