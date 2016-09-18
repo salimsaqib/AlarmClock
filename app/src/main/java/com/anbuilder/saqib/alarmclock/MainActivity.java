@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
@@ -33,6 +34,8 @@ import com.anbuilder.saqib.alarmclock.R;
 
 import java.util.Calendar;
 
+import static java.util.Calendar.HOUR_OF_DAY;
+
 public class MainActivity extends AppCompatActivity {
 
     AlarmManager alarmManager;
@@ -40,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private TimePicker alarmTimePicker;
     private static MainActivity inst;
     private TextView alarmTextView;
-    private ToggleButton alarmToggle;
+    private Switch alarmToggle;
     static MediaPlayer player = new MediaPlayer();
 
     public static MainActivity instance() {
@@ -63,28 +66,39 @@ public class MainActivity extends AppCompatActivity {
 
         alarmTimePicker  = (TimePicker) findViewById(R.id.alarmTimePicker);
         alarmTextView = (TextView) findViewById(R.id.alarmText);
-        alarmToggle = (ToggleButton) findViewById(R.id.alarmToggle);
+        alarmToggle = (Switch) findViewById(R.id.alarmToggle);
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
     }
 
     public void onToggleClicked(View view) {
-        if (((ToggleButton) view).isChecked()) {
+        long time;
+        if (((Switch) view).isChecked()) {
             Log.d("MainActivity", "Alarm On");
             Calendar calendar = Calendar.getInstance();
+            //calendar.setTimeInMillis(System.currentTimeMillis());
+
             if (Build.VERSION.SDK_INT >= 23 )
             {
-                calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getHour());
+                calendar.set(HOUR_OF_DAY, alarmTimePicker.getHour());
                 calendar.set(Calendar.MINUTE, alarmTimePicker.getMinute());
             }
             else
             {
-                calendar.set(Calendar.HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
+                calendar.set(HOUR_OF_DAY, alarmTimePicker.getCurrentHour());
                 calendar.set(Calendar.MINUTE, alarmTimePicker.getCurrentMinute());
             }
 
             Intent i = new Intent(MainActivity.this, AlarmReceiver.class);
-            pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, i, 0);
-            alarmManager.set(AlarmManager.RTC, calendar.getTimeInMillis(), pendingIntent);
+            pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+            time=(calendar.getTimeInMillis()-(calendar.getTimeInMillis()%60000));
+            if(System.currentTimeMillis()>time)
+            {
+                if (calendar.AM_PM == 0)
+                    time = time + (1000*60*60*12);
+                else
+                    time = time + (1000*60*60*24);
+            }
+            alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
         } else {
             alarmManager.cancel(pendingIntent);
             setAlarmText("");

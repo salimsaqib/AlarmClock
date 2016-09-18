@@ -6,6 +6,7 @@ import android.app.AlarmManager;
 import android.app.Fragment;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,10 +28,10 @@ public class Quiz extends AppCompatActivity {
     AlarmManager alarmManager;
     public static RadioGroup radioGroup;
     public static RadioButton radioButton1, radioButton2, radioButton3, radioButton4, radioButtonselect;
-    public static TextView tv,tv2;
+    public static TextView tv,tv2,tv3;
     public static BufferedReader reader = null;
     public static Bundle tempBundle;
-    public static String[] input = new String[100];
+    public static String[] Maininput = new String[100];
     public static int count=1;
     QuizHandle instance = new QuizHandle(this);
 
@@ -47,6 +48,16 @@ public class Quiz extends AppCompatActivity {
 
         tv = (TextView) findViewById(R.id.question);
         tv2 = (TextView) findViewById(R.id.hint);
+        tv3 = (TextView) findViewById(R.id.alarmText);
+        Typeface type = Typeface.createFromAsset(getAssets(),"fonts/ComicSansMS3.ttf");
+        tv2.setTypeface(type);
+        tv.setTypeface(type);
+        tv3.setTypeface(type);
+        tv3.setText("You have to solve this quiz");
+        radioButton1.setTypeface(type);
+        radioButton2.setTypeface(type);
+        radioButton3.setTypeface(type);
+        radioButton4.setTypeface(type);
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
@@ -63,7 +74,7 @@ public class Quiz extends AppCompatActivity {
             while ((line = reader.readLine()) != null)
             {
                 line = line + "\n";
-                input[i] = line;
+                Maininput[i] = line;
                 i++;
 
             }
@@ -82,12 +93,7 @@ public class Quiz extends AppCompatActivity {
     }
 
     public void onClickSubmit(View view) {
-        if(Quiz.count==2)
-        {
-            Intent intent3 = new Intent(Quiz.this, GiveUp.class);
-            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intent3);
-        }
+
 
         QuizHandle a = new QuizHandle(this);
         boolean b = a.match();
@@ -104,9 +110,12 @@ public class Quiz extends AppCompatActivity {
         }
         else
         {
-            System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
-            QuizHandle ab = new QuizHandle(this);
-            ab.QuizGenerate();
+            //System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
+            //QuizHandle ab = new QuizHandle(this);
+            //ab.QuizGenerate();
+            Intent intent3 = new Intent(Quiz.this, solution.class);
+            //intent3.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent3);
 
         }
         Quiz.count++;
@@ -131,10 +140,11 @@ class QuizHandle
 
     }
     public static String[] input = new String[100];
+    public static int number;
     public void QuizGenerate() {
 
         //String filename = "input.txt";
-        int number;
+
         while(true)
         {
             Random rand = new Random();
@@ -146,7 +156,7 @@ class QuizHandle
 
                 for(int i =1 ;i<=7;i++)
                 {
-                    input[i] = Quiz.input[number+i];
+                    input[i] = Quiz.Maininput[number+i];
                 }
 
 
@@ -157,7 +167,7 @@ class QuizHandle
 
                 for(int i =1 ;i<=7;i++)
                 {
-                    input[i] = Quiz.input[number+i-1];
+                    input[i] = Quiz.Maininput[number+i-1];
                 }
 
                 break;

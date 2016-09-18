@@ -11,6 +11,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -37,10 +38,14 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(final Context context, Intent intent) {
 
-
+        PowerManager pm = (PowerManager) context.getSystemService(context.POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP ), "TAG");
+        wakeLock.acquire();
         //this will update the UI with message
         MainActivity inst = MainActivity.instance();
         inst.setAlarmText("");
+
+
 
         //this will sound the alarm tone
         //this will sound the alarm once, if you wish to

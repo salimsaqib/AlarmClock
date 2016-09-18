@@ -7,7 +7,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MyActivity"
-    android:background="@drawable/back">
+    android:background="@drawable/mochagrunge">
 
     <TimePicker
         android:layout_width="wrap_content"
@@ -43,7 +43,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:onClick="onClickSnooze"
-        android:background="@drawable/button_style"
+        android:background="@drawable/button_style_home"
 
         />
 
